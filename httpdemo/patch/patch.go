@@ -10,9 +10,9 @@ import (
 
 func Info(info map[string]string) {
 	fmt.Println("Loading...")
-	info["PatchPerson"] = "PatchPerson"
-	info["PatchSay"] = "PatchSay"
-	info["PatchX"] = "PatchX"
+	info["PatchPerson"] = "PatchPersonX"
+	info["PatchSay"] = "PatchSayX"
+	info["PatchX"] = "PatchXXX"
 }
 
 func Say(w http.ResponseWriter, req *http.Request) {
@@ -22,8 +22,9 @@ func Say(w http.ResponseWriter, req *http.Request) {
 func PatchPerson(a *types.Person) {
 	rt := reflect.TypeOf(a)
 	ifix.PatchInstanceMethod(rt, "Hello", func(p *types.Person, w http.ResponseWriter, req *http.Request) {
-		w.Write([]byte("patch2 running"))
+		w.Write([]byte("patch1 running"))
 	})
+
 }
 
 func PatchSay(h func(w http.ResponseWriter, req *http.Request)) {
@@ -32,6 +33,6 @@ func PatchSay(h func(w http.ResponseWriter, req *http.Request)) {
 
 func PatchX(handler func(w http.ResponseWriter, req *http.Request)) {
 	ifix.Patch(handler, func(w http.ResponseWriter, req *http.Request) {
-		w.Write([]byte(fmt.Sprintf("X = %d\n", 520)))
+		w.Write([]byte(fmt.Sprintf("X = %d\n", 10)))
 	})
 }
